@@ -607,6 +607,15 @@ run_update() {
     tui_title "Checking for updates..."
     echo ""
 
+    local current_branch
+    current_branch=$(git -C "$REPO_ROOT" branch --show-current 2>/dev/null)
+    if [[ -n "$current_branch" && "$current_branch" != "main" ]]; then
+        tui_error "Update must be run from the main branch."
+        tui_info "Current branch: $current_branch"
+        tui_info "Try: git checkout main && ./setup update"
+        return 1
+    fi
+
     # After a git pull, the setup script re-execs itself so that updated library
     # code (doctor, migrations, etc.) is loaded fresh. _II_POST_PULL signals that
     # we already pulled and should skip straight to the sync phase.

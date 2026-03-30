@@ -32,6 +32,13 @@ Add `-y` for non-interactive mode.
 ./setup update
 ```
 
+Run this from the `main` branch. If you're on a feature branch, switch back first:
+
+```bash
+git checkout main
+./setup update
+```
+
 What happens:
 1. Checks remote for new commits
 2. Creates snapshot (for rollback)
